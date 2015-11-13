@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+
+        <title>Sistema Gerador de Informações</title>
+
+        <!-- CSS com AngularJS e Bootstrap -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>      
+
+        <!-- jQuery library do Google -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+        <!-- JavaScript do Bootstrap -->
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        
+        <!-- Script Editor de Texto -->
+        <script src="cssjs_libs/tinymce/tinymce.min.js"></script>
+        <script language="javascript" src="cssjs_libs/base.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid" ng-app="newInfo" ng-controller="info">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">GeraInfo</a>
+                    </div>
+                    <div>
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Nova Informação</a></li>
+                            <li><a href="#">Editar Informação</a></li>
+                            <li><a href="#">Buscar</a></li> 
+                            <li><a href="#"></a></li> 
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>            
+            <h1>Gerador de Informações</h1>
+            <div class="row">
+                <div class="col-md-8" style="background-color:lavender;">
+                    <h3>Nova</h3>
+
+                    <form class="form-horizontal" role="form" method="post" action="index.php" ng-submit="submit($event)">
+                        <div class="form-group">
+                            <label for="interessado" class="control-label col-sm-1">Interessado:</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="interessado" name="interessado" ng-model="interessado" placeholder="Digite aqui o Interessado">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="numero" class="control-label col-sm-1">Número: </label>
+                            <div class="col-sm-8">
+                                <input type="number" min="0" max='9999' maxlength="4" class="form-control" id="numero" name="numero" ng-model="numero" placeholder="Digite o número da Informação" />
+                            </div>
+                            <label for="numero" class="control-label col-sm-1">De: </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" name="ano" ng-model="ano" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="saudacao" class="control-label col-sm-1">Saudação: </label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="saudacao" name="saudacao" placeholder="Senhor(a) Diretor(a) do(a) " ng-model="saudacao" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="assunto" class="control-label col-sm-1">Assunto:</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" maxlength="450" id="assunto" name="assunto" ng-model="assunto" placeholder="Digite aqui o assunto da Informação em  no máximo 450 caracteres" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="apreciacao" class="control-label col-sm-1">Apreciação: </label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control textarea" rows="2" name="apreciacao" placeholder="Digite a apreciação" id="apreciacao"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="conclusao" class="control-label col-sm-1">Conclusão: </label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control textarea" name="conclusao" rows="1" id="conclusao"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group"> 
+                            <div class="col-sm-offset-1 col-sm-11">
+                                <button type="submit" class="btn btn-default">Salvar Informação</button>&nbsp;<button class="btn btn-default" ng-click="preview()">Visualizar</button>
+                            </div>
+                        </div>                        
+                    </form>
+
+
+                </div>
+                <div class="col-md-4" style="background-color:lavenderblush;">
+                    <h3>Pré-visualização: Informação nº<b ng-bind="numero + '/' + ano"></b> </h3>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-2"><b>Interessado: </b></div>
+                            <div class="col-sm-10" ng-bind="interessado"></div>
+                        </div>
+                        <div class='row' style='margin-top:8px'>
+                            <div class="col-sm-12" ng-bind='saudacao'></div>
+                        </div>
+                        <div class="row" style='margin-top:8px'>    
+                            <div class="col-sm-2"><b>Assunto: </b></div>
+                            <div class="col-sm-10" ng-bind='assunto'></div>
+                        </div>
+                        <div class="row" style='margin-top:8px'>    
+                            <div class="col-sm-2"><b>Apreciação: </b></div>
+                            <div class="col-sm-10" id="apreciacao-container"></div>
+                        </div>
+                        <div class="row" style='margin-top:8px'>
+                            <div class="col-sm-2"><b>Conclusão: </b></div>
+                            <div class="col-sm-10" id="conclusao-container"></div>
+                        </div>
+                        <div class='row'>
+                            <div class="col-sm-12" align='center'><b ng-bind='interessado'></b>, <span ng-bind='data_extenso'></span></div>
+                        </div>
+                        <div class='row' style='margin-top: 16px'>
+                            <div class="col-sm-12" align='center'><b>NOME DO FULANO DE TAL</b></div>
+                        </div>
+                        <div class='row'>
+                            <div class="col-sm-12" align='center'>Cargo de Fulano VI</div>
+                        </div>
+                        <div class='row' style='margin-bottom: 15px'>
+                            <div class="col-sm-12" align='center'>Pront nº: 10200</div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+
+        </div>
+    </body>
+</html>
