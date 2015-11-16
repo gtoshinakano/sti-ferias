@@ -46,8 +46,8 @@ if (!isset($_COOKIE['l'])){
             
             // Colocar aqui, casos de valores para page.
             // Páginas estão em src/pages/*.php
-            case "": 
-                
+            case "view": 
+                include "src/pages/view.php";
             break;
             default:
                 include "src/pages/index.php";

@@ -1,0 +1,103 @@
+<script>
+    $(function() {
+        $(".datepicker").datepicker({
+            showButtonPanel: true
+        });
+    });
+    
+    
+    function convertDateFromPhp(date){
+        
+
+            
+    }
+</script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1><mark style="float:right">{TODAY}</mark><i class="fa fa-user"></i> {NAME}</h1>
+        </div>      
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h3>PRONTUÁRIO: <mark><b>{PRONT}</b></mark></h3>
+    </div>
+    <div class="col-md-4">
+        <h3>RG: <mark><b>{RG}</b></mark></h3>
+    </div>
+    <div class="col-md-4">
+        <h3>ADMITIDO EM: <mark><b>{ADMISS}</b></mark></h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <h3>DIRETORIA: <mark>{DIR}</mark></h3>
+    </div>
+    <div class="col-md-3">
+        <h3><mark><b>{DIV}</b></mark></h3>
+    </div>
+    <div class="col-md-3">
+        <h3><mark><b>{SER}</b></mark></h3>
+    </div>
+    <div class="col-md-3">
+        <h3><mark><b>{SEC}</b></mark></h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7" style="background: #fff">
+        <div class="page-header"><h2>ÚLTIMAS FÉRIAS</h2></div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th width="35%">PERÍODO DE AQUISIÇÃO</th>
+                    <th width="35%">PERÍODO DE FÉRIAS</th>
+                    <th width="15%">ABONO</th>
+                    <th width="15%">ADIANTAMENTO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- BEGIN EACH_FERIAS -->
+                <tr>
+                    <td>{PERIODO}</td>
+                    <td>{FERIAS}</td>
+                    <td>{ABONO}</td>
+                    <td class="text-center">{ADIANTA}</td>
+                </tr>
+                <!-- END EACH_FERIAS -->
+            </tbody>
+        </table>
+    </div>    
+    <div class="col-md-5" style="background: #fafafa">
+        <div class="page-header"><h2>SALVAR FÉRIAS</h2></div>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="aquisicao">Período de Aquisição:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control datepicker" placeholder="Selecione uma data" id="aquisicao" valu="{AQUISICAO_INI}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">Entrada de Férias:</label>
+                <div class="col-sm-4"> 
+                    <input type="text" class="form-control datepicker" placeholder="Selecione uma data" id="ferias">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-3"> 
+                    <label><input type="checkbox" name="" id="abono"> Opto pelo abono (10 dias)</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-3"> 
+                    <label><input type="checkbox" name="" id="adiantamento"> Opto pelo adiantamento 13º</label>
+                </div>
+            </div>
+            <div class="form-group"> 
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button type="submit" class="btn btn-default">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

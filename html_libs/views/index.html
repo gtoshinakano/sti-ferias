@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="page-header">
-            <h1><i class="fa fa-users"></i> Relação de Funcionários</h1>
+            <h1><mark style="float:right">{TODAY}</mark><i class="fa fa-users"></i> Relação de Funcionários</h1>
         </div>      
     </div>
 </div>
@@ -21,12 +21,12 @@
             <tbody>
                 <!-- BEGIN EACH_FUNC -->
                 <tr>
-                    <td>{PRONT}</td>
-                    <td><i class="fa fa-pencil-square-o"></i> {NAME}</td>
-                    <td>{RG}</td>
-                    <td>{ADMISS}</td>
-                    <td>{FERIAS}</td>
-                    <td>{PERIODO}</td>
+                    <td><a href="?page=view&pront={PRONT}">{PRONT}</a></td>
+                    <td><a href="?page=view&pront={PRONT}"><i class="fa fa-pencil-square-o"></i> {NAME}</a></td>
+                    <td><a href="?page=view&pront={PRONT}">{RG}</a></td>
+                    <td><a href="?page=view&pront={PRONT}">{ADMISS}</a></td>
+                    <td><a href="?page=view&pront={PRONT}">{FERIAS}</a></td>
+                    <td><a href="?page=view&pront={PRONT}">{PERIODO}</a></td>
                 </tr>
                 <!-- END EACH_FUNC -->
             </tbody>

@@ -9,6 +9,9 @@ $func_sql   = "SELECT u.pront, u.nome, u.rg2, u.admissao, f.aquisicao_ini, f.aqu
 $func_sql  .= "WHERE u.admissao <> '' AND u.pront = f.pront ORDER BY u.nome ASC, f.aquisicao_ini DESC limit 1";
 $func_query = mysql_query($func_sql);
 
+
+$today_date = Date('Y-m-d');
+$tpl->TODAY = setDateDiaMesAno($today_date, true);
 if(mysql_num_rows($func_query) > 0){
     
     // Colocando resultado da consulta em array $funcionarios e buscando seus períodos de férias
@@ -17,10 +20,10 @@ if(mysql_num_rows($func_query) > 0){
         $tpl->NAME  = $linha['nome'];
         $tpl->RG    = $linha['rg2'];
         $tpl->ADMISS= setDateDiaMesAno($linha['admissao']);
-        
-
         $tpl->FERIAS= setDateDiaMesAno($linha['ferias_ini']) . " a " . setDateDiaMesAno($linha['ferias_fin']);
         $tpl->PERIODO=setDateDiaMesAno($linha['aquisicao_ini']) . " a " . setDateDiaMesAno($linha['aquisicao_fin']);
+        if($today_date > $linha['aquisicao_fin']) 
+            $tpl->PERIODO .= ' <span class="glyphicon glyphicon-asterisk" style="color:red"></span>';
         $tpl->block('EACH_FUNC');
         
     }
