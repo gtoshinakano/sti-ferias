@@ -51,6 +51,7 @@ if (!isset($_COOKIE['l'])){
             break;
             default:
                 include "src/pages/index.php";
+                var_dump($funcionarios);
             break;
             
         }
@@ -64,6 +65,3 @@ if (!isset($_COOKIE['l'])){
     $tpl->show();
     
 }
-
-
-var_dump($_COOKIE);

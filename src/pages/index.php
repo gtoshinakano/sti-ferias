@@ -5,22 +5,28 @@ $tpl->addFile('CONTEUDO', 'html_libs/views/index.html');
 /*
  * Buscar usuários com admissao <> "" para preencher array
  */
-$func_sql   = "SELECT pront, nome, rg2, admissao FROM usuario WHERE admissao <> '' ORDER BY nome ASC";
+$func_sql   = "SELECT u.pront, u.nome, u.rg2, u.admissao, f.aquisicao_ini, f.aquisicao_fin, f.ferias_ini, f.ferias_fin FROM usuario u, ferias f ";
+$func_sql  .= "WHERE u.admissao <> '' AND u.pront = f.pront ORDER BY u.nome ASC, f.aquisicao_ini DESC limit 1";
 $func_query = mysql_query($func_sql);
-$funcionarios;
 
 if(mysql_num_rows($func_query) > 0){
     
     // Colocando resultado da consulta em array $funcionarios e buscando seus períodos de férias
-    $it_func = 0;
     while($linha = mysql_fetch_array($func_query, MYSQL_ASSOC)){
+        $tpl->PRONT = $linha['pront'];
+        $tpl->NAME  = $linha['nome'];
+        $tpl->RG    = $linha['rg2'];
+        $tpl->ADMISS= setDateDiaMesAno($linha['admissao']);
         
-        $funcionarios[$it_func] = $linha;
-        
-        $it_func++;
+
+        $tpl->FERIAS= setDateDiaMesAno($linha['ferias_ini']) . " a " . setDateDiaMesAno($linha['ferias_fin']);
+        $tpl->PERIODO=setDateDiaMesAno($linha['aquisicao_ini']) . " a " . setDateDiaMesAno($linha['aquisicao_fin']);
+        $tpl->block('EACH_FUNC');
         
     }
     
 }
 
+
+//$fin = date('Y-m-d', strtotime("+1 year -1 day",strtotime($linha['aquisicao_ini'])));
 ?>
