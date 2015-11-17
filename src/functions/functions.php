@@ -318,4 +318,14 @@ function getDiaSemana($data, $abrev = true) {
     
 }
 
+//Retorna data para ser inserida no datepicker
+function convertDateToJS($date) {
+
+    $ret = explode("-", $date);
+    $ano = $ret[0];
+    $mes = ((int) $ret[1]) - 1;
+    $dia = (int) $ret[2];
+    return "new Date(" . $ano . "," . $mes . "," . $dia . ")";
+}
+
 ?>

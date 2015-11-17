@@ -1,16 +1,49 @@
 <script>
-    $(function() {
-        $(".datepicker").datepicker({
-            showButtonPanel: true
-        });
-    });
-    
-    
-    function convertDateFromPhp(date){
+    $(document).ready(function(){
         
-
+        $(".datepicker").datepicker({
+            showButtonPanel: true,
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true
+        });
+        
+        
+        $('#aquisicao-ini').change(function(){
             
-    }
+            var val = $('#aquisicao-ini').datepicker('getDate');
+            val.setFullYear(val.getFullYear() + 1);
+            val.setDate(val.getDate() - 1);
+            var converted_date = formatDate(val, 'dd/MM/yyyy');
+            $('#aquisicao-fin').val(converted_date);
+            $('input[name=aquisicao-fin-post]').val(converted_date);
+            $('#ferias-ini').val(converted_date);
+            $('#ferias-ini').change();
+            
+        });
+        
+        $('#ferias-ini').change(function(){
+            
+            var dias= ( $('#abono').is(':checked') ) ? 20 : 30;
+            var val =$('#ferias-ini').datepicker('getDate');
+            val.setDate(val.getDate() + dias);
+            var converted_date = formatDate(val, 'dd/MM/yyyy');
+            $('#ferias-fin').val(converted_date);
+            $('input[name=ferias-fin-post]').val(converted_date);
+            
+        });
+        
+        $('#abono').change(function(){
+            
+            $('#ferias-ini').change();
+            
+        });
+        
+        //alert($('input[name=aquisicao_ini]').val());
+        
+        
+    });
+
 </script>
 <div class="row">
     <div class="col-md-12">
@@ -47,13 +80,25 @@
 <div class="row">
     <div class="col-md-7" style="background: #fff">
         <div class="page-header"><h2>ÚLTIMAS FÉRIAS</h2></div>
+        <!-- BEGIN AVISO -->
+        <div class="alert alert-danger">
+            <strong>Erro: </strong> {AVISO_MSG}
+        </div>
+        <!-- END AVISO -->
+        <!-- BEGIN SUCESSO -->
+        <div class="alert alert-success">
+            <strong>Férias salvas com sucesso.</strong>
+        </div>
+        <!-- END SUCESSO -->        
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th width="35%">PERÍODO DE AQUISIÇÃO</th>
-                    <th width="35%">PERÍODO DE FÉRIAS</th>
+                    <th width="30%">PERÍODO DE AQUISIÇÃO</th>
+                    <th width="30%">PERÍODO DE FÉRIAS</th>
                     <th width="15%">ABONO</th>
                     <th width="15%">ADIANTAMENTO</th>
+                    <th width="5%"></th>
+                    <th width="5%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -63,36 +108,58 @@
                     <td>{FERIAS}</td>
                     <td>{ABONO}</td>
                     <td class="text-center">{ADIANTA}</td>
+                    <td><a href="?page=pdf&ferias={FERIAS_ID}">impr</a></td>
+                    <td><A href="?page=edit&ferias={FERIAS_ID}">edit</td>
                 </tr>
                 <!-- END EACH_FERIAS -->
             </tbody>
         </table>
     </div>    
     <div class="col-md-5" style="background: #fafafa">
-        <div class="page-header"><h2>SALVAR FÉRIAS</h2></div>
-        <form class="form-horizontal" role="form">
+        <div class="page-header"><h2>NOVAS FÉRIAS</h2></div>
+        <form class="form-horizontal" role="form" method="post" action="?page=view&pront={PRONT}">
             <div class="form-group">
                 <label class="control-label col-sm-3" for="aquisicao">Período de Aquisição:</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control datepicker" placeholder="Selecione uma data" id="aquisicao" valu="{AQUISICAO_INI}">
+                    <input type="text" class="form-control datepicker" placeholder="Selecione a data inicial de Aquisição" id="aquisicao-ini" name="aquisicao-ini-post" value="{AQUIS_INI_FORM}">
                 </div>
+                <div class="col-sm-1 text-center">
+                    <h5>a</h5>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="aquisicao-fin"  value="{AQUIS_FIN_FORM}" disabled="">
+                    <input type="hidden" name="aquisicao-fin-post" value="{AQUIS_FIN_FORM}">
+                </div>               
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-3" for="pwd">Entrada de Férias:</label>
+                <label class="control-label col-sm-3" for="ferias-ini">Entrada de Férias:</label>
                 <div class="col-sm-4"> 
-                    <input type="text" class="form-control datepicker" placeholder="Selecione uma data" id="ferias">
+                    <input type="text" class="form-control datepicker" placeholder="Selecione uma data para férias" id="ferias-ini" name="ferias-ini-post" value="{FERIAS_INI_FORM}">
+                </div>
+                <div class="col-sm-1 text-center">
+                    <h5>a</h5>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control datepicker" placeholder="Final de Férias" id="ferias-fin" value="{FERIAS_FIN_FORM}" disabled>
+                    <input type="hidden" name="ferias-fin-post" value="{FERIAS_FIN_FORM}">
+                </div> 
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-3"> 
+                    <label><input type="checkbox" name="abono" id="abono"> Optou pelo abono (10 dias)</label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-3"> 
-                    <label><input type="checkbox" name="" id="abono"> Opto pelo abono (10 dias)</label>
+                    <label><input type="checkbox" name="adiantamento" id="adiantamento"> Optou pelo adiantamento 13º</label>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-4 col-sm-offset-3"> 
-                    <label><input type="checkbox" name="" id="adiantamento"> Opto pelo adiantamento 13º</label>
+                <label class="control-label col-sm-3" for="ferias-obs">Observações:</label>
+                <div class="col-sm-9"> 
+                    <textarea class="form-control" id="ferias-obs" name="ferias-obs" placeholder="Digite alguma informação que poderá ser útil para posteriores consultas."></textarea>
                 </div>
-            </div>
+            </div>            
             <div class="form-group"> 
                 <div class="col-sm-offset-3 col-sm-9">
                     <button type="submit" class="btn btn-default">Salvar</button>
