@@ -17,8 +17,8 @@ $feri_ini = getTransformDate($feri_ini);
 $feri_fin = mysql_real_escape_string($_POST['ferias-fin-post']);
 $feri_fin = getTransformDate($feri_fin);
 $feri_obs = mysql_real_escape_string($_POST['ferias-obs']);
-$abono    = (isset($_POST['abono'])) ? true : false;
-$adianta  = (isset($_POST['adiantamento'])) ? true : false;
+$abono    = (isset($_POST['abono'])) ? 'true' : 'false';
+$adianta  = (isset($_POST['adiantamento'])) ? 'true' : 'false';
 
 if($aqui_ini != "" && $aqui_fin != "" && $feri_ini != "" && $feri_fin != "" ){
     

@@ -33,7 +33,7 @@ if(isset($_GET['pront'])){
         $tpl->FERIAS_INI_FORM= setDateDiaMesAno(date('Y-m-d', strtotime("+1 year",strtotime($funcionario['admissao']))));
         $tpl->FERIAS_FIN_FORM= setDateDiaMesAno(date('Y-m-d', strtotime("+1 year +30 days",strtotime($funcionario['admissao']))));
         
-            // Caso o usuário envie o form, o POST será tratado em outro arquivo.
+        // Caso o usuário envie o form, o POST será tratado em outro arquivo.
         if ($_SERVER['REQUEST_METHOD'] == 'POST') include "saveVacation.php";
         
         /*
@@ -53,13 +53,13 @@ if(isset($_GET['pront'])){
             if($today_date > $ferias['aquisicao_fin'] && $ferias_it == $ferias_qtd){ 
                 
                 $tpl->PERIODO .= ' <span class="glyphicon glyphicon-asterisk" style="color:red"></span><span style="color:red">vencido</span>';
-                // Esses sobrepõem os dados colocados no form anteriormente.
-                $tpl->AQUIS_INI_FORM = setDateDiaMesAno(date('Y-m-d', strtotime("+1 day",strtotime($ferias['aquisicao_fin']))));
-                $tpl->AQUIS_FIN_FORM = setDateDiaMesAno(date('Y-m-d', strtotime("+1 year",strtotime($ferias['aquisicao_fin']))));
-                $tpl->FERIAS_INI_FORM= setDateDiaMesAno(date('Y-m-d', strtotime("+1 year +1 day",strtotime($ferias['aquisicao_fin']))));
-                $tpl->FERIAS_FIN_FORM= setDateDiaMesAno(date('Y-m-d', strtotime("+1 year +31 days",strtotime($ferias['aquisicao_fin']))));
-                
-            }
+    
+            }            
+            // Esses sobrepõem os dados colocados no form anteriormente.
+            $tpl->AQUIS_INI_FORM = setDateDiaMesAno(date('Y-m-d', strtotime("+1 day", strtotime($ferias['aquisicao_fin']))));
+            $tpl->AQUIS_FIN_FORM = setDateDiaMesAno(date('Y-m-d', strtotime("+1 year", strtotime($ferias['aquisicao_fin']))));
+            $tpl->FERIAS_INI_FORM = setDateDiaMesAno(date('Y-m-d', strtotime("+1 year +1 day", strtotime($ferias['aquisicao_fin']))));
+            $tpl->FERIAS_FIN_FORM = setDateDiaMesAno(date('Y-m-d', strtotime("+1 year +31 days", strtotime($ferias['aquisicao_fin']))));
             $tpl->FERIAS    = setDateDiaMesAno($ferias['ferias_ini']) . " a " . setDateDiaMesAno($ferias['ferias_fin']);
             $tpl->ABONO     = ($ferias['abono']) ? "SIM" : "NÃO";
             $tpl->ADIANTA   = ($ferias['adiantamento']) ? "SIM" : "NÃO";
